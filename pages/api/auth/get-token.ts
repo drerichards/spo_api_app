@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { parse } from "cookie";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { parse } from 'cookie';
 
 /**
  * This API endpoint is responsible for fetching an access token from the cookies
@@ -13,7 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   /**
    * Parse the cookies from the request headers.
    */
-  const cookies = parse(req.headers.cookie || "");
+  const cookies = parse(req.headers.cookie || '');
 
   /**
    * Extract the access token from the cookies.
@@ -25,7 +25,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
    * with an error message.
    */
   if (!accessToken) {
-    return res.status(401).json({ error: "Access token is missing" });
+    return res.status(401).json({ error: 'Access token is missing' });
   }
 
   /**

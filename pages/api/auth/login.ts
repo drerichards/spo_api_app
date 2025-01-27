@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * This API route is responsible for handling the login process.
@@ -21,23 +21,25 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Create a string of scopes to request from Spotify
   const scopes = [
     // Read user profile information
-    "user-read-private",
+    'user-read-private',
     // Read the user's email address
-    "user-read-email",
-  ].join(" ");
+    'user-read-email',
+  ].join(' ');
 
   // Construct the query parameters for the authorization URL
   const queryParams = new URLSearchParams({
     // The client ID from the Spotify Developer Dashboard
-    client_id: process.env.SPOTIFY_CLIENT_ID || "",
+    client_id: process.env.SPOTIFY_CLIENT_ID || '',
     // The response type is a code, which will be exchanged for an access token
-    response_type: "code",
+    response_type: 'code',
     // The redirect URI to send the user back to after authorization
-    redirect_uri: process.env.SPOTIFY_REDIRECT_URI || "",
+    redirect_uri: process.env.SPOTIFY_REDIRECT_URI || '',
     // The scopes to request from Spotify
     scope: scopes,
   });
 
   // Redirect the user to the Spotify authorization URL
-  res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`);
+  res.redirect(
+    `https://accounts.spotify.com/authorize?${queryParams.toString()}`
+  );
 }
