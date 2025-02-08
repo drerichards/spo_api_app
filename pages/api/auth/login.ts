@@ -18,12 +18,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
  * @param res The Next.js response object.
  */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Create a string of scopes to request from Spotify
   const scopes = [
-    // Read user profile information
     'user-read-private',
-    // Read the user's email address
     'user-read-email',
+    'playlist-read-private',
+    'playlist-read-collaborative',
   ].join(' ');
 
   // Construct the query parameters for the authorization URL

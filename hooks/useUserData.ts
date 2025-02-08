@@ -1,5 +1,6 @@
 import useAppStore from "@/store/appState";
-import { SpotifyUser } from "@/types";
+import { OptionalString } from "@/types";
+import { SpotifyUser } from "@/types/store";
 import spotifyAxios from "@/utils/spotifyAxios";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 
@@ -14,7 +15,7 @@ const fetchUserData = async (accessToken: string): Promise<SpotifyUser> => {
 };
 
 // Hook to fetch user data and sync with AppState
-export const useUserData = (accessToken: string | undefined) => {
+export const useUserData = (accessToken: OptionalString) => {
     const setUserData = useAppStore(state => state.setUserData); // Zustand function
 
     const query = useQuery<SpotifyUser, Error>({

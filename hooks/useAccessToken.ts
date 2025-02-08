@@ -4,7 +4,10 @@ import useAppStore from '@/store/appState'; // Import Zustand store
 // Fetch the access token
 const fetchAccessToken = async (): Promise<string> => {
     const response = await fetch("/api/auth/get-token");
-    if (!response.ok) throw new Error("Failed to fetch access token");
+    if (!response.ok) {
+        window.location.href = "/";
+        return Promise.reject("Redirected to home page due to failed token fetch");
+    }
     const { accessToken } = await response.json();
     return accessToken;
 };

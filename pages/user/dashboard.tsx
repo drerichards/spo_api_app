@@ -30,6 +30,8 @@ const Dashboard = () => {
   if (tokenError || userError || playlistsError) return <p>Error: {tokenError?.message || userError?.message}</p>;
 
   console.log(userPlaylists);
+  console.log(userData);
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -44,7 +46,7 @@ const Dashboard = () => {
             height={50}
             style={{ borderRadius: '50%' }}
           />
-          {userPlaylists && <PlaylistGrid playlists={userPlaylists} />}
+          {userPlaylists ? <PlaylistGrid playlists={userPlaylists} /> : <p>No playlists available</p>}
         </div>
       )}
     </div>
