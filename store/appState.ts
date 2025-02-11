@@ -12,7 +12,8 @@ const useAppStore = create<AppState>(set => ({
   setCurrentTrack: (track: SpotifyTrack) => set({ currentTrack: track }),
 
   userPlaylists: [],
-  setUserPlaylists: (playlists: SpotifyPlaylist[]) => set({ userPlaylists: playlists }),
+  setUserPlaylists: (playlists: SpotifyPlaylist[]) =>
+    set({ userPlaylists: playlists }),
 
   theme: 'light',
   toggleTheme: () =>

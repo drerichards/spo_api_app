@@ -1,36 +1,27 @@
 import Image from 'next/image';
-import { useAccessToken } from '@/hooks/useAccessToken';
 import { useUserData } from '@/hooks/useUserData';
 import useAppStore from '@/store/appState';
 import { useFetchUserPlaylists } from '@/hooks/useFetchUserPlaylists';
 import PlaylistGrid from '@/components/playlist/PlaylistGrid';
 
 const Dashboard = () => {
-  const {
-    data: accessToken,
-    isLoading: tokenLoading,
-    error: tokenError,
-  } = useAccessToken();
+  const { data, isLoading: userLoading, error: userError } = useUserData();
 
   const {
-    data,
-    isLoading: userLoading,
-    error: userError,
-  } = useUserData(accessToken);
-
-  const { data: userPlaylists,
+    data: userPlaylists,
     isLoading: playlistsLoading,
     error: playlistsError,
-  } = useFetchUserPlaylists(accessToken);
+  } = useFetchUserPlaylists();
 
-  const storeData = useAppStore((state) => state.userData);
+  const storeData = useAppStore(state => state.userData);
   const userData = storeData ? storeData : data;
 
-  if (tokenLoading || userLoading || playlistsLoading) return <p>Loading...</p>;
-  if (tokenError || userError || playlistsError) return <p>Error: {tokenError?.message || userError?.message}</p>;
+  if (userLoading || playlistsLoading) return <p>Loading...</p>;
+  if (userError || playlistsError)
+    return <p>Error: {userError?.message || playlistsError?.message}</p>;
 
-  console.log(userPlaylists);
-  console.log(userData);
+  // console.log(userPlaylists);
+  // console.log(userData);
 
   return (
     <div>
@@ -46,7 +37,11 @@ const Dashboard = () => {
             height={50}
             style={{ borderRadius: '50%' }}
           />
-          {userPlaylists ? <PlaylistGrid playlists={userPlaylists} /> : <p>No playlists available</p>}
+          {userPlaylists ? (
+            <PlaylistGrid playlists={userPlaylists} />
+          ) : (
+            <p>No playlists available</p>
+          )}
         </div>
       )}
     </div>

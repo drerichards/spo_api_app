@@ -1,39 +1,48 @@
-import styled from "styled-components";
-import Image from 'next/image';
+import styled from 'styled-components';
 
-export const Container = styled.div`
-    padding: 16px;
+export const CenteredLayout = styled.div`
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
-export const Title = styled.h1`
-    font-size: 2rem;
-    margin-bottom: 24px;
-    text-align: center;
+export const Title = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
 `;
 
-export const Grid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-    justify-content: center;
+export const GridContainer = styled.div`
+  width: 100%;
+  max-width: 1000px;
 `;
 
 export const Card = styled.div`
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+  text-align: center;
+  min-width: 150px;
+  border-radius: 2px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
-export const PlaylistName = styled.h3`
-    margin: 12px 0;
-    font-size: 1.2rem;
-    color: #333;
-    text-transform: capitalize;
+export const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-top: 100%; // ✅ Maintains square aspect ratio
+  overflow: hidden;
 `;
 
-export const StyledImage = styled(Image)`
-    border-radius: 8px;
-    object-fit: cover;
+export const PlaylistName = styled.p`
+  margin-top: 8px;
+  font-weight: bold;
+  text-align: center;
 `;
