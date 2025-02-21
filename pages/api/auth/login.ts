@@ -1,23 +1,20 @@
+import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
+import crypto from 'crypto';
 
-/**
- * This API route is responsible for handling the login process.
- *
- * When a user visits the login page, this route is called, and it redirects the user
- * to the Spotify authorization URL. The URL is constructed with the client ID,
- * response type, redirect URI, and scopes.
- *
- * The scopes are:
- *
- * - `user-read-private`: allows the app to read user profile information
- * - `user-read-email`: allows the app to read the user's email address
- *
- * The redirect URI is set to the `SPOTIFY_REDIRECT_URI` environment variable.
- *
- * @param req The Next.js request object.
- * @param res The Next.js response object.
- */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const state = crypto.randomBytes(16).toString('hex'); // Secure random state
+
+  res.setHeader(
+    'Set-Cookie',
+    serialize('spotify_auth_state', state, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 300, // Valid for 5 minutes
+    })
+  );
   const scopes = [
     'user-read-private',
     'user-read-email',
@@ -25,19 +22,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     'playlist-read-collaborative',
   ].join(' ');
 
-  // Construct the query parameters for the authorization URL
+  if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_REDIRECT_URI) {
+    return res.status(500).json({ error: 'Missing Spotify credentials' });
+  }
+
   const queryParams = new URLSearchParams({
-    // The client ID from the Spotify Developer Dashboard
-    client_id: process.env.SPOTIFY_CLIENT_ID || '',
-    // The response type is a code, which will be exchanged for an access token
+    client_id: process.env.SPOTIFY_CLIENT_ID,
     response_type: 'code',
-    // The redirect URI to send the user back to after authorization
-    redirect_uri: process.env.SPOTIFY_REDIRECT_URI || '',
-    // The scopes to request from Spotify
+    redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
     scope: scopes,
+    state, // CSRF protection
+    show_dialog: 'true', // Force reauthorization
   });
 
-  // Redirect the user to the Spotify authorization URL
   res.redirect(
     `https://accounts.spotify.com/authorize?${queryParams.toString()}`
   );

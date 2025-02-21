@@ -41,7 +41,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-
     <ChakraProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Layout>

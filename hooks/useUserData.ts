@@ -1,21 +1,16 @@
-import useAppStore from '@/store/appState';
-import { SpotifyUser } from '@/types/store';
-import spotifyAxios from '@/utils/spotifyAxios';
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
-const fetchUserData = async (): Promise<SpotifyUser> => {
-  const response = await spotifyAxios.get<SpotifyUser>('/me');
-  return response.data;
+const fetchUserData = async () => {
+  const { data } = await axios.get('/api/user', { withCredentials: true });
+  return data;
 };
 
 export const useUserData = () => {
-  const setUserData = useAppStore(state => state.setUserData);
-  const query = useQuery<SpotifyUser, Error>({
+  return useQuery({
     queryKey: ['user'],
     queryFn: fetchUserData,
-    onSuccess: (data: SpotifyUser) => setUserData(data),
     staleTime: 1000 * 60 * 5,
-  } as UseQueryOptions<SpotifyUser, Error>);
-
-  return query;
+    retry: 2,
+  });
 };

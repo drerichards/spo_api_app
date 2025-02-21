@@ -43,6 +43,14 @@ export interface SpotifyTrack {
   }[];
 }
 
+export interface SpotifyPlaylistData {
+  limit: number;
+  offset: number;
+  previous: string | null;
+  total: number;
+  items: SpotifyPlaylist[];
+}
+
 export interface SpotifyPlaylist {
   id: string;
   name: string;

@@ -1,33 +1,19 @@
-import spotifyAxios from '@/utils/spotifyAxios';
+import { SpotifyPlaylistData } from '@/types/store';
 import { useQuery } from '@tanstack/react-query';
-import { SpotifyPlaylist } from '@/types/store';
+import axios from 'axios';
 
-const fetchUserPlaylists = async (): Promise<SpotifyPlaylist[]> => {
-  // let allPlaylists: SpotifyPlaylist[] = [];
-  // let nextUrl: NullableString = `/me/playlists?limit=50`;
-
-  // while (nextUrl) {
-  //     const response: { data: { items: SpotifyPlaylist[]; next: NullableString } } = await spotifyAxios.get(nextUrl, {
-  //         headers: {
-  //             Authorization: `Bearer ${accessToken}`,
-  //         },
-  //     });
-  //     allPlaylists = allPlaylists.concat(response.data.items);
-  //     nextUrl = response.data.next;
-  // }
-
-  const response = await spotifyAxios.get<{ items: SpotifyPlaylist[] }>(
-    `/me/playlists?`
-  );
-  return response.data.items;
-  // console.log(allPlaylists)
-  // return [];
+const fetchUserPlaylists = async (): Promise<SpotifyPlaylistData> => {
+  const { data } = await axios.get('/api/user/playlists', {
+    withCredentials: true,
+  });
+  return data;
 };
 
 export const useFetchUserPlaylists = () => {
-  return useQuery<SpotifyPlaylist[], Error>({
+  return useQuery({
     queryKey: ['playlists'],
     queryFn: fetchUserPlaylists,
     staleTime: 1000 * 60 * 5,
+    retry: 2,
   });
 };
