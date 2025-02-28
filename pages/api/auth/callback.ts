@@ -58,7 +58,7 @@ export default async function handler(
       createCookie('spotify_refresh_token', refresh_token, 60 * 60 * 24 * 30), // 30 days
     ]);
 
-    return res.redirect('/user/dashboard');
+    return res.redirect('/user/library');
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error(

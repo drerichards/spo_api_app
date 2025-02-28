@@ -62,7 +62,6 @@ export default async function handler(
       }),
     ]);
 
-    // Redirect to the app (e.g., homepage or dashboard)
     res.redirect(302, '/');
   } catch (error: unknown) {
     // Handle any errors that occur when refreshing the token

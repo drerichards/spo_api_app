@@ -1,6 +1,6 @@
 import { useUserData } from '@/hooks/useUserData';
 import useAppStore from '@/store/appState';
-import * as css from './styled';
+import * as css from './styles';
 
 const UserDetails = () => {
   const storeData = useAppStore(state => state.userData);

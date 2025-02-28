@@ -9,5 +9,25 @@
   "arrowParens": "avoid",
   "parser": "typescript",
   "endOfLine": "lf",
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
+      "files": ["*.css", "*.scss", "*.less", "*.html"],
+      "options": {
+        "parser": "css"
+      }
+    },
+    {
+      "files": ["*.json", "*.yaml"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }
