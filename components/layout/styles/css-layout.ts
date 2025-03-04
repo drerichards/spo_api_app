@@ -12,7 +12,7 @@ export const LayoutContainer = chakra('div', {
 });
 
 export const MainContentContainer = chakra(motion.div, {
-  shouldForwardProp: (prop) =>
+  shouldForwardProp: prop =>
     ['animate', 'transition', 'initial', 'exit', 'children'].includes(prop) ||
     prop.startsWith('data-'),
 });

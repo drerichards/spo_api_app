@@ -1,4 +1,3 @@
-
 // import { useMusicPlayer } from '@/hooks/useMusicPlayer';
 
 const MusicPlayer = () => {
@@ -6,9 +5,7 @@ const MusicPlayer = () => {
 
   // if (!currentTrack) return null; // Hide player when no track is selected
 
-  return (
-    <>Music</>
-  );
+  return <>Music</>;
 };
 
 export default MusicPlayer;

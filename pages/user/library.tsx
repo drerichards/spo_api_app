@@ -1,3 +1,3 @@
-import PageLibrary from '@/components/_pages/library/LibraryPage';
+import LibraryPage from '@/components/_pages/library/LibraryPage';
 
-export default PageLibrary;
+export default LibraryPage;

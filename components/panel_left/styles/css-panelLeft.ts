@@ -1,6 +1,9 @@
 import { chakra } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { ToolkitLink, ToolkitPanelButton } from '@/components/_uiToolkit/styles/css-uiToolkit';
+import {
+  ToolkitLink,
+  ToolkitPanelButton,
+} from '@/components/_uiToolkit/styles/css-uiToolkit';
 
 export const MenuLeftContainer = chakra(motion.div, {
   baseStyle: {
@@ -22,7 +25,7 @@ export const MenuLeftContainer = chakra(motion.div, {
 export const MenuLeftTransition = chakra(motion.div, {
   baseStyle: {
     width: '100%',
-    transition: 'opacity 0.3s ease, visibility 0.3s ease',
+    transition: 'opacity 0.35s ease, visibility 0.35s ease',
   },
 });
 

@@ -18,7 +18,7 @@ const PlaylistPanel = ({ playlistId, onClose }: PlaylistPanelProps) => {
   const { data: tracks, isLoading, error } = useFetchUserPlaylistTracks(playlistId);
 
   return (
-    <PanelContainer>
+    <PanelContainer id={`playlist-panel-${playlistId}`}>
       <PanelHeader>
         <PanelTitle>Playlist Tracks</PanelTitle>
         <CloseButton

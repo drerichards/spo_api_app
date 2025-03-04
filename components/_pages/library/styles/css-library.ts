@@ -9,7 +9,7 @@ export const LibraryContainer = chakra(motion.div, {
     width: '100%',
     height: '100%',
     position: 'relative',
-    transition: 'width 0.3s ease-in-out',
+    transition: 'width 0.35s ease-in-out',
     overflowX: 'hidden',
   },
 });
@@ -21,7 +21,7 @@ export const PlaylistListContainer = chakra(motion.div, {
     overflowY: 'auto',
     color: theme.colors.brand[400],
     transform: 'translateX(0%)',
-    transition: 'transform 0.3s ease-in-out',
+    transition: 'transform 0.35s ease-in-out',
     background: theme.colors.background.panel,
     height: '92vh',
     overflow: 'hidden',
@@ -39,7 +39,7 @@ export const SlidingPanel = chakra(motion.div, {
     right: 0,
     zIndex: 0,
     transform: 'translateX(100%)',
-    transition: 'transform 0.3s ease-in-out',
+    transition: 'transform 0.35s ease-in-out',
   }),
 });
 
@@ -57,7 +57,7 @@ export const PlaylistItem = chakra(ToolkitListItem, {
     alignItems: 'center',
     gap: '16px',
     padding: '10px',
-    transition: 'background 0.3s ease',
+    transition: 'background 0.35s ease',
     cursor: 'pointer',
     _hover: {
       backgroundColor: theme.colors.brand[500],

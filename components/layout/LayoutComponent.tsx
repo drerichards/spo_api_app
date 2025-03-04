@@ -23,16 +23,16 @@ const LayoutComponent = ({ children }: LayoutProps) => {
       const authenticated = await hasAccessToken();
       setIsAuthenticated(authenticated);
       if (!authenticated && router.pathname !== '/') {
-        router.push('/'); // Force redirect to / if not authenticated
+        router.push('/');
       }
     };
     checkAuth();
   }, [hasAccessToken, userData, router]);
 
-  if (isAuthenticated === null) return <ToolkitSpinner />;
+  if (!isAuthenticated) return <ToolkitSpinner />;
 
   return (
-    <LayoutContainer>
+    <LayoutContainer id='layout'>
       <Header />
       <PageContainer>
         {isAuthenticated && (
@@ -42,9 +42,21 @@ const LayoutComponent = ({ children }: LayoutProps) => {
           />
         )}
         <MainContentContainer
+          id="main-content"
           animate={{
-            flex: isCollapsed ? 1 : 1.2,
-            transition: { duration: 0.3, ease: 'easeInOut' },
+            width: isCollapsed ? 'calc(100% - 40px)' : 'calc(100% - 252px)', // Stretch left from right edge
+            transition: {
+              duration: 0.35,
+              ease: 'easeInOut',
+              type: 'tween',
+            },
+          }}
+          initial={false}
+          css={{
+            flex: '1 1 auto',
+            position: 'absolute',
+            right: 0, // Pin right edge to screen
+            minWidth: 'calc(100% - 252px)', // Ensure it starts with enough space
           }}
         >
           {isAuthenticated ? children : <LoginPage />}

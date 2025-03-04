@@ -12,10 +12,13 @@ import {
   SlidingPanel,
 } from './styles/css-library';
 import { NullableString } from '@/types';
-import { ScrollableContainer, ScrollableSection } from '@/components/layout/styles/css-layout';
+import {
+  ScrollableContainer,
+  ScrollableSection,
+} from '@/components/layout/styles/css-layout';
 import { ToolkitSpinner } from '@/components/_uiToolkit/ui';
 
-const PageLibrary = () => {
+const LibraryPage = () => {
   const { data: playlists, isLoading, error } = useFetchUserPlaylists();
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<NullableString>(null);
 
@@ -23,8 +26,8 @@ const PageLibrary = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <LibraryContainer>
-      <PlaylistListContainer animate={{ flex: selectedPlaylistId ? 0.73 : 1 }}>
+    <LibraryContainer id='library-page'>
+      <PlaylistListContainer animate={{ flex: selectedPlaylistId ? 0.73 : 1.2 }}>
         <ScrollableContainer>
           <ScrollableSection>
             <Text
@@ -75,4 +78,4 @@ const PageLibrary = () => {
   );
 };
 
-export default PageLibrary;
+export default LibraryPage;

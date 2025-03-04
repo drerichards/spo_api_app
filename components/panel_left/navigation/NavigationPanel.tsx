@@ -8,7 +8,6 @@ import {
 } from '../styles/css-panelLeft';
 import { useUserData } from '@/hooks/useUserData';
 import useLogout from '@/hooks/useLogout';
-// import { ToolkitSpinner } from '@/components/_uiToolkit/ui';
 
 interface NavigationPanelProps {
   isCollapsed: boolean;
@@ -19,10 +18,7 @@ const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) 
   const { userData: user } = useUserData();
   const logout = useLogout();
 
-  const handleLogout = async () => {
-    await logout(); // Execute the logout function
-  };
-
+  const handleLogout = async () => await logout();
 
   return (
     <>
@@ -34,12 +30,16 @@ const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) 
             onClick={() => setIsCollapsed(!isCollapsed)}
             size="sm" />
           <MenuLeftContainer
+            id='navigation-panel'
             animate={{
-              x: isCollapsed ? '-100%' : '0%',
-              opacity: isCollapsed ? 0 : 1,
-              transition: { duration: 0.3, ease: 'easeInOut' },
+              x: isCollapsed ? -200 : 0, // Slide left to -252px when collapsing
+              transition: {
+                duration: 0.35,
+                ease: 'easeInOut',
+                type: 'tween',
+              },
             }}
-            initial={{ x: '0%', opacity: 1 }}
+            initial={false}
           >
             <VStackContainer>
               <VStack align="start" spacing={3} w="full">

@@ -12,7 +12,7 @@ interface PlaylistListProps {
 
 const PlaylistList = ({ playlists, onSelectPlaylist }: PlaylistListProps) => {
   return (
-    <PlaylistListContainer>
+    <PlaylistListContainer id='playlist-list'>
       {playlists.items.map((playlist: SpotifyPlaylist) => (
         <PlaylistItem
           key={playlist.id}

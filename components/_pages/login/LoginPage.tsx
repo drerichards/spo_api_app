@@ -1,6 +1,13 @@
 import { FaSpotify } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { Heading, PageContainer, ContentContainer, Subheading, PermissionsBox, LoginButton } from './styles/css-login';
+import {
+  Heading,
+  PageContainer,
+  ContentContainer,
+  Subheading,
+  PermissionsBox,
+  LoginButton,
+} from './styles/css-login';
 import { Text } from '@chakra-ui/react';
 
 const LoginPage = () => {
@@ -24,12 +31,19 @@ const LoginPage = () => {
             <li>🔹 Control playback on your Spotify devices.</li>
             <li>🔹 View your top artists and listening history.</li>
           </ul>
-          <Text fontSize="sm" mt={3}>
-            We <strong>**do not**</strong> store your password. Authentication is handled via Spotify OAuth.
+          <Text
+            fontSize="sm"
+            mt={3}
+          >
+            We <strong>**do not**</strong> store your password. Authentication
+            is handled via Spotify OAuth.
           </Text>
         </PermissionsBox>
 
-        <LoginButton leftIcon={<FaSpotify />} onClick={handleLogin}>
+        <LoginButton
+          leftIcon={<FaSpotify />}
+          onClick={handleLogin}
+        >
           Log in with Spotify
         </LoginButton>
       </ContentContainer>

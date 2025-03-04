@@ -71,7 +71,7 @@ export const LoginButton = chakra(Button, {
     width: '100%',
     marginTop: '20px',
     borderRadius: '8px',
-    transition: '0.3s',
+    transition: '0.35s',
     _hover: {
       bg: 'brand.300',
     },

@@ -20,7 +20,7 @@ export const PlaylistItem = chakra(motion(Box), {
     borderRadius: 'md',
     bg: 'background.panel',
     cursor: 'pointer',
-    transition: 'background 0.3s ease, transform 0.2s ease',
+    transition: 'background 0.5s ease, transform 0.5s ease',
     _hover: {
       bg: 'brand.200',
       transform: 'scale(1.02)',
@@ -104,11 +104,9 @@ export const TrackItem = chakra(Text, {
     padding: '8px',
     borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
     fontSize: 'md',
-    // color: 'brand.300',
     cursor: 'pointer',
     _hover: {
       bg: 'brand.500',
-      // color: 'brand.400',
     },
   },
 });

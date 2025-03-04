@@ -6,7 +6,7 @@ import { chakra } from '@chakra-ui/react';
 export const ToolkitLink = chakra(Link, {
   baseStyle: {
     color: 'brand.400',
-    transition: 'background 0.3s ease',
+    transition: 'background 0.35s ease',
     width: '100%',
     padding: '5px',
     borderRadius: '2px',
@@ -19,7 +19,7 @@ export const ToolkitLink = chakra(Link, {
 
 export const ToolkitListItem = chakra(ListItem, {
   baseStyle: {
-    transition: 'background 0.3s ease',
+    transition: 'background 0.35s ease',
     width: '100%',
     padding: '5px',
     borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
@@ -36,7 +36,6 @@ export const ToolkitListItem = chakra(ListItem, {
   },
 });
 
-
 export const ToolkitPanelButton = chakra(IconButton, {
   baseStyle: {
     position: 'absolute',
@@ -48,13 +47,12 @@ export const ToolkitPanelButton = chakra(IconButton, {
     minWidth: 'unset',
     zIndex: '1000',
     color: 'white',
-    transition: 'background 0.3s ease',
+    transition: 'background 0.35s ease',
     _hover: {
       opacity: 0.35,
     },
   },
 });
-
 
 export const ToolkitSpinnerContainer = chakra('div', {
   baseStyle: {
