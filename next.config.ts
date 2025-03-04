@@ -11,7 +11,9 @@ const nextConfig: NextConfig = {
       'image-cdn-fa.spotifycdn.com',
     ],
   },
-  experimental: {},
+  compiler: {
+    styledComponents: true,
+  },
 };
 
 export default nextConfig;

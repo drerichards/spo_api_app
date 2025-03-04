@@ -1,29 +1,22 @@
+// pages/api/auth/callback.ts
+import { parse, serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import { createCookie } from '@/utils/setCookie';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method Not Allowed' });
+
+  const cookies = parse(req.headers.cookie || '');
+  const storedState = cookies.spotify_auth_state;
+  const { state, code } = req.query;
+
+  if (!state || state !== storedState) {
+    return res.status(400).json({ error: 'Invalid state parameter' });
   }
-
-  const { code } = req.query;
-
-  if (!code) {
-    console.error('❌ Authorization code is missing');
-    return res.status(400).json({ error: 'Authorization code is required' });
-  }
+  if (!code) return res.status(400).json({ error: 'Authorization code required' });
 
   try {
-    // ✅ Exchange authorization code for access + refresh tokens
-    const tokenResponse = await axios.post<{
-      access_token: string;
-      refresh_token: string;
-      expires_in: number;
-    }>(
+    const tokenResponse = await axios.post(
       'https://accounts.spotify.com/api/token',
       new URLSearchParams({
         grant_type: 'authorization_code',
@@ -41,38 +34,31 @@ export default async function handler(
     );
 
     const { access_token, refresh_token, expires_in } = tokenResponse.data;
-
     if (!access_token || !refresh_token) {
-      console.error(
-        '❌ Missing tokens from Spotify API response:',
-        tokenResponse.data
-      );
-      return res
-        .status(500)
-        .json({ error: 'Invalid token response from Spotify' });
+      return res.status(500).json({ error: 'Invalid token response' });
     }
 
-    // ✅ Store tokens securely in HTTP-only cookies
     res.setHeader('Set-Cookie', [
-      createCookie('spotify_access_token', access_token, expires_in),
-      createCookie('spotify_refresh_token', refresh_token, 60 * 60 * 24 * 30), // 30 days
+      serialize('spotify_access_token', access_token, {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: expires_in,
+      }),
+      serialize('spotify_refresh_token', refresh_token, {
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 30,
+      }),
+      serialize('spotify_auth_state', '', { path: '/', httpOnly: true, maxAge: 0 }),
     ]);
 
     return res.redirect('/user/library');
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error(
-        '🔥 Callback API Error:',
-        error.response?.data || error.message
-      );
-      return res.status(error.response?.status || 500).json({
-        error:
-          error.response?.data?.error ||
-          'Failed to exchange authorization code',
-      });
-    }
-
-    console.error('🔥 Unexpected Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Callback error:', error);
+    return res.status(500).json({ error: 'Failed to authenticate' });
   }
 }

@@ -4,7 +4,7 @@ import {
   PlaylistItem,
   PlaylistImage,
   PlaylistName,
-} from '../styles';
+} from '../styles/css-panelRight';
 interface PlaylistListProps {
   playlists: SpotifyPlaylistData;
   onSelectPlaylist: (id: string) => void;

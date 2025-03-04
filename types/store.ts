@@ -1,18 +1,29 @@
 export interface AppState {
-  accessToken: string | null;
-  setAccessToken: (token: string) => void;
-
   userData: SpotifyUser | null;
-  setUserData: (data: SpotifyUser) => void;
+  setUserData: (data: SpotifyUser | null) => void;
 
   currentTrack: SpotifyTrack | null;
-  setCurrentTrack: (track: SpotifyTrack) => void;
+  setCurrentTrack: (track: SpotifyTrack | null) => void;
 
-  userPlaylists: SpotifyPlaylist[];
+  isPlaying: boolean;
+  setIsPlaying: (isPlaying: boolean) => void;
+
+  volume: number;
+  setVolume: (volume: number) => void;
+
+  playbackQueue: ReadonlyArray<SpotifyTrack>;
+  setPlaybackQueue: (queue: SpotifyTrack[]) => void;
+  addToQueue: (track: SpotifyTrack) => void;
+  removeFromQueue: (trackId: string) => void;
+
+  userPlaylists: ReadonlyArray<SpotifyPlaylist>;
   setUserPlaylists: (playlists: SpotifyPlaylist[]) => void;
 
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+
+  isLoggingOut: boolean;
+  hasAccessToken: () => Promise<boolean>;
 }
 
 export interface SpotifyUser {
@@ -21,6 +32,8 @@ export interface SpotifyUser {
   images: { url: string }[];
   id: string;
   country: string;
+  followers?: { total: number };
+  external_urls?: { spotify: string };
 }
 
 export interface SpotifyTrack {

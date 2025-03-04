@@ -10,15 +10,16 @@ import {
   PlaylistName,
   PlaylistList,
   SlidingPanel,
-} from './styles';
+} from './styles/css-library';
 import { NullableString } from '@/types';
-import { ScrollableContainer, ScrollableSection } from '@/components/layout/styles';
+import { ScrollableContainer, ScrollableSection } from '@/components/layout/styles/css-layout';
+import { ToolkitSpinner } from '@/components/_uiToolkit/ui';
 
 const PageLibrary = () => {
   const { data: playlists, isLoading, error } = useFetchUserPlaylists();
   const [selectedPlaylistId, setSelectedPlaylistId] = useState<NullableString>(null);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <ToolkitSpinner />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

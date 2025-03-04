@@ -6,8 +6,8 @@ import {
   PanelTitle,
   TrackList,
   TrackItem,
-} from '../styles';
-import { ToolkitSpinner } from '@/components/_uiToolkit/components';
+} from '../styles/css-panelRight';
+import { ToolkitSpinner } from '@/components/_uiToolkit/ui';
 
 interface PlaylistPanelProps {
   playlistId: string;

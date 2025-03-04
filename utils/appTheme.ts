@@ -1,4 +1,4 @@
-import { extendTheme, theme as baseTheme } from '@chakra-ui/react';
+import { extendTheme, ThemeConfig, theme as baseTheme } from '@chakra-ui/react';
 import { Mulish } from 'next/font/google';
 
 const mulish = Mulish({
@@ -6,17 +6,20 @@ const mulish = Mulish({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
 });
 
-const themeOverrides = extendTheme({
-  config: {
-    initialColorMode: 'dark',
-    useSystemColorMode: false,
-  },
+const config: ThemeConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+};
+
+const themeOverrides = {
+  ...baseTheme, // Ensure Chakra UI's default theme is included
+  config,
   fonts: {
     heading: mulish.style.fontFamily,
     body: mulish.style.fontFamily,
   },
   colors: {
-    ...baseTheme.colors,
+    ...baseTheme.colors, // Include default Chakra colors
     brand: {
       100: '#1D3557',
       200: '#457B9D',
@@ -38,6 +41,8 @@ const themeOverrides = extendTheme({
       },
     },
   },
-});
+};
 
-export default themeOverrides;
+const appTheme = extendTheme(themeOverrides);
+
+export default appTheme;

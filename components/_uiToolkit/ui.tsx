@@ -1,5 +1,5 @@
 import { Spinner } from '@chakra-ui/react';
-import { ToolkitSpinnerContainer } from '.';
+import { ToolkitSpinnerContainer } from './styles/css-uiToolkit';
 
 export const ToolkitSpinner = () => (
     <ToolkitSpinnerContainer>

@@ -1,9 +1,10 @@
+// pages/api/auth/login.ts
 import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 import crypto from 'crypto';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const state = crypto.randomBytes(16).toString('hex'); // Secure random state
+  const state = crypto.randomBytes(16).toString('hex');
 
   res.setHeader(
     'Set-Cookie',
@@ -12,9 +13,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 300, // Valid for 5 minutes
+      maxAge: 300,
     })
   );
+
   const scopes = [
     'user-read-private',
     'user-read-email',
@@ -22,20 +24,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     'playlist-read-collaborative',
   ].join(' ');
 
-  if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_REDIRECT_URI) {
-    return res.status(500).json({ error: 'Missing Spotify credentials' });
-  }
-
   const queryParams = new URLSearchParams({
-    client_id: process.env.SPOTIFY_CLIENT_ID,
+    client_id: process.env.SPOTIFY_CLIENT_ID!,
     response_type: 'code',
-    redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
+    redirect_uri: process.env.SPOTIFY_REDIRECT_URI!,
     scope: scopes,
-    state, // CSRF protection
-    show_dialog: 'true', // Force reauthorization
+    state,
+    show_dialog: 'true',
   });
 
-  res.redirect(
-    `https://accounts.spotify.com/authorize?${queryParams.toString()}`
-  );
+  res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`);
 }
