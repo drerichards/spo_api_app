@@ -1,3 +1,4 @@
+// pages/api/auth/session.ts
 import { parse } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 

@@ -8,12 +8,11 @@ export const useUserData = () => {
 
   useEffect(() => {
     if (!userData && !isLoggingOut) {
-      // Skip fetch during logout
       const fetchData = async () => {
         try {
           const tokenRes = await axios.get('/api/auth/get-token', {
             withCredentials: true,
-          }); // Fix endpoint
+          });
           const userRes = await axios.get('https://api.spotify.com/v1/me', {
             headers: { Authorization: `Bearer ${tokenRes.data.accessToken}` },
           });

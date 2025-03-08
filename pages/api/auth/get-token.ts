@@ -1,4 +1,4 @@
-// pages/api/auth/token.ts
+// pages/api/auth/get-token.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import { parse } from 'cookie';
 

@@ -35,3 +35,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.redirect(`https://accounts.spotify.com/authorize?${queryParams.toString()}`);
 }
+// TODO: clicking cancel to spot auth should redirect to home

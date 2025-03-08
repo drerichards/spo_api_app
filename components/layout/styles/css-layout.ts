@@ -11,16 +11,26 @@ export const LayoutContainer = chakra('div', {
   },
 });
 
-export const MainContentContainer = chakra(motion.div, {
-  shouldForwardProp: prop =>
-    ['animate', 'transition', 'initial', 'exit', 'children'].includes(prop) ||
-    prop.startsWith('data-'),
-});
-
 export const PageContainer = chakra('div', {
   baseStyle: {
     display: 'flex',
     flex: 1,
+  },
+});
+
+export const AuthContentContainer = chakra(motion.div, {
+  baseStyle: {
+    flex: '1 1 auto',
+    width: '100%',
+  },
+});
+
+export const MainContentContainer = chakra(AuthContentContainer, {
+  shouldForwardProp: prop =>
+    ['animate', 'transition', 'initial', 'exit', 'children'].includes(prop) ||
+    prop.startsWith('data-'),
+  baseStyle: {
+    position: 'relative',
   },
 });
 

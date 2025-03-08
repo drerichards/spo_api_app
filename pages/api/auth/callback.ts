@@ -11,9 +11,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { state, code } = req.query;
 
   if (!state || state !== storedState) {
-    return res.status(400).json({ error: 'Invalid state parameter' });
+    console.error('Invalid state parameter');
+    res.setHeader('Set-Cookie', serialize('spotify_auth_state', '', { path: '/', maxAge: 0 }));
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    return res.redirect('/'); // Redirect to home with no error display
   }
-  if (!code) return res.status(400).json({ error: 'Authorization code required' });
+
+  if (!code) {
+    console.error('Authorization code required');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    return res.redirect('/'); // Redirect to home with no error display
+  }
 
   try {
     const tokenResponse = await axios.post(
@@ -35,7 +43,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { access_token, refresh_token, expires_in } = tokenResponse.data;
     if (!access_token || !refresh_token) {
-      return res.status(500).json({ error: 'Invalid token response' });
+      console.error('Invalid token response');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      return res.redirect('/');
     }
 
     res.setHeader('Set-Cookie', [
@@ -56,9 +66,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       serialize('spotify_auth_state', '', { path: '/', httpOnly: true, maxAge: 0 }),
     ]);
 
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     return res.redirect('/user/library');
   } catch (error) {
     console.error('Callback error:', error);
-    return res.status(500).json({ error: 'Failed to authenticate' });
+    res.setHeader('Set-Cookie', serialize('spotify_auth_state', '', { path: '/', maxAge: 0 }));
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    return res.redirect('/');
   }
 }

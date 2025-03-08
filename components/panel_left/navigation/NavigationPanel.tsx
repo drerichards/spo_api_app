@@ -32,7 +32,7 @@ const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) 
           <MenuLeftContainer
             id='navigation-panel'
             animate={{
-              x: isCollapsed ? -200 : 0, // Slide left to -252px when collapsing
+              x: isCollapsed ? -200 : 0,
               transition: {
                 duration: 0.35,
                 ease: 'easeInOut',

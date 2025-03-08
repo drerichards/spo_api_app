@@ -38,12 +38,20 @@ const useAppStore = create<AppState>()(
       theme: 'light',
       toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
 
-      isLoggingOut: false, // New flag
+      isLoggingOut: false,
       hasAccessToken: async () => {
         try {
-          const response = await axios.get('/api/auth/authenticated', { withCredentials: true });
-          return response.data.authenticated;
-        } catch {
+          const response = await axios.get('/api/auth/authenticated', {
+            withCredentials: true,
+            headers: {
+              'Cache-Control': 'no-store',
+            },
+          });
+
+          const { authenticated } = response.data;
+          return authenticated;
+        } catch (error) {
+          console.error('Error checking access token:', error);
           return false;
         }
       },

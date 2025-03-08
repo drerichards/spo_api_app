@@ -9,9 +9,19 @@ import {
   LoginButton,
 } from './styles/css-login';
 import { Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { NullableString } from '@/types';
 
 const LoginPage = () => {
   const router = useRouter();
+  const [error, setError] = useState<NullableString>(null);
+
+  useEffect(() => {
+    // Check for error from redirect (though we're not setting it now, future-proofing)
+    if (router.query.error) {
+      setError('Authentication failed. Please try again.');
+    }
+  }, [router.query]);
 
   const handleLogin = () => {
     router.push('/api/auth/login');
@@ -46,6 +56,7 @@ const LoginPage = () => {
         >
           Log in with Spotify
         </LoginButton>
+        {error && <p style={{ color: 'red' }}>{`Error: {${error}`}</p>}
       </ContentContainer>
     </PageContainer>
   );
