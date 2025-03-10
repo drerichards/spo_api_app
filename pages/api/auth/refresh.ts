@@ -1,7 +1,8 @@
 // pages/api/auth/refresh.ts
 import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { parse, serialize } from 'cookie';
+import { parse } from 'cookie';
+import { createCookie } from '@/utils/createCookie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const cookies = parse(req.headers.cookie || '');
@@ -31,12 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { access_token, expires_in } = response.data;
     res.setHeader('Set-Cookie', [
-      serialize('spotify_access_token', access_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: expires_in,
-        path: '/',
-      }),
+      createCookie('spotify_access_token', access_token, expires_in),
     ]);
 
     res.redirect(302, '/');

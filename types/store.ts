@@ -23,7 +23,8 @@ export interface AppState {
   toggleTheme: () => void;
 
   isLoggingOut: boolean;
-  hasAccessToken: () => Promise<boolean>;
+  tokenExpiresIn: number;
+  setTokenExpiresIn: (expiresIn: number) => void;
 }
 
 export interface SpotifyUser {

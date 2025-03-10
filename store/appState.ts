@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AppState, SpotifyPlaylist, SpotifyTrack, SpotifyUser } from '@/types/store';
-import axios from 'axios';
 
 const useAppStore = create<AppState>()(
   persist(
@@ -39,28 +38,15 @@ const useAppStore = create<AppState>()(
       toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
 
       isLoggingOut: false,
-      hasAccessToken: async () => {
-        try {
-          const response = await axios.get('/api/auth/authenticated', {
-            withCredentials: true,
-            headers: {
-              'Cache-Control': 'no-store',
-            },
-          });
-
-          const { authenticated } = response.data;
-          return authenticated;
-        } catch (error) {
-          console.error('Error checking access token:', error);
-          return false;
-        }
-      },
+      tokenExpiresIn: 0,
+      setTokenExpiresIn: (expiresIn: number) => set({ tokenExpiresIn: expiresIn }),
     }),
     {
       name: 'app-state',
       partialize: (state) => ({
         userData: state.userData,
         theme: state.theme,
+        tokenExpiresIn: state.tokenExpiresIn,
       }),
     }
   )

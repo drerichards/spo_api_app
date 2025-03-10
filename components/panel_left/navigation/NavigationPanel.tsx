@@ -7,22 +7,20 @@ import {
   VStackContainer
 } from '../styles/css-panelLeft';
 import { useUserData } from '@/hooks/useUserData';
-import useLogout from '@/hooks/useLogout';
 
 interface NavigationPanelProps {
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
+  handleLogout: () => void;
+  isLoading: boolean;
 }
 
-const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) => {
+const NavigationPanel = ({ isCollapsed, setIsCollapsed, handleLogout, isLoading }: NavigationPanelProps) => {
   const { userData: user } = useUserData();
-  const logout = useLogout();
-
-  const handleLogout = async () => await logout();
 
   return (
     <>
-      {user && (
+      {user && !isLoading ? (
         <>
           <MenuLeftToggleButton
             icon={isCollapsed ? <HamburgerIcon boxSize={4} /> : <CloseIcon boxSize={3} />}
@@ -48,7 +46,6 @@ const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) 
               </VStack>
 
               <VStack align="start" gap={0} w="full">
-                <MenuLink href="/">Home</MenuLink>
                 <MenuLink href="/user/library">Your Library</MenuLink>
                 <MenuLink href="/user/settings">Settings</MenuLink>
               </VStack>
@@ -56,12 +53,14 @@ const NavigationPanel = ({ isCollapsed, setIsCollapsed }: NavigationPanelProps) 
             <VStackContainer>
               <Divider />
               <VStack align="start" gap={0} w="full">
-                <MenuLink as={'button'} onClick={handleLogout}>Logout</MenuLink>
+                <MenuLink as={'button'} onClick={handleLogout} disabled={isLoading}>
+                  Logout
+                </MenuLink>
               </VStack>
             </VStackContainer>
           </MenuLeftContainer>
         </>
-      )}
+      ) : null}
     </>
   );
 };

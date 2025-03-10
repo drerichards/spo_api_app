@@ -1,7 +1,10 @@
 // pages/api/auth/callback.ts
-import { parse, serialize } from 'cookie';
+import { parse } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
+import useAppStore from '@/store/appState';
+import { createCookie } from '@/utils/createCookie';
+import crypto from 'crypto';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method Not Allowed' });
@@ -12,15 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!state || state !== storedState) {
     console.error('Invalid state parameter');
-    res.setHeader('Set-Cookie', serialize('spotify_auth_state', '', { path: '/', maxAge: 0 }));
+    res.setHeader('Set-Cookie', createCookie('spotify_auth_state', '', 0));
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    return res.redirect('/'); // Redirect to home with no error display
+    return res.redirect('/');
   }
-
   if (!code) {
     console.error('Authorization code required');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    return res.redirect('/'); // Redirect to home with no error display
+    return res.redirect('/');
   }
 
   try {
@@ -48,29 +50,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.redirect('/');
     }
 
-    res.setHeader('Set-Cookie', [
-      serialize('spotify_access_token', access_token, {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: expires_in,
-      }),
-      serialize('spotify_refresh_token', refresh_token, {
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 30,
-      }),
-      serialize('spotify_auth_state', '', { path: '/', httpOnly: true, maxAge: 0 }),
-    ]);
+    const csrfToken = crypto.randomBytes(32).toString('hex');
+
+    useAppStore.getState().setTokenExpiresIn(expires_in);
+
+    const cookieHeaders = [
+      createCookie('spotify_access_token', access_token, expires_in),
+      createCookie('spotify_refresh_token', refresh_token, 60 * 60 * 24 * 30),
+      createCookie('spotify_auth_state', '', 0),
+      createCookie('csrf_token', csrfToken, 60 * 60 * 24 * 30, false),
+    ];
+    res.setHeader('Set-Cookie', cookieHeaders);
 
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     return res.redirect('/user/library');
   } catch (error) {
     console.error('Callback error:', error);
-    res.setHeader('Set-Cookie', serialize('spotify_auth_state', '', { path: '/', maxAge: 0 }));
+    res.setHeader('Set-Cookie', createCookie('spotify_auth_state', '', 0));
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     return res.redirect('/');
   }

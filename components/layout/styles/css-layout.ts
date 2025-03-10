@@ -48,3 +48,4 @@ export const ScrollableSection = chakra('div', {
     maxHeight: '89vh',
   },
 });
+

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { getAccessToken } from '@/utils/getAccessToken';
+import spotifyAxios from '@/utils/spotifyAxios';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,10 +11,10 @@ export default async function handler(
     return res.status(405).json({ error: 'Method Not Allowed' });
 
   const accessToken = getAccessToken(req, res);
-  if (!accessToken) return; // Already handled in `getAccessToken`
+  if (!accessToken) return;
 
   try {
-    const response = await axios.get('https://api.spotify.com/v1/me', {
+    const response = await spotifyAxios.get('/me', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 

@@ -1,7 +1,6 @@
 import { Box, IconButton, Text, VStack, Image, chakra } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 
-// Playlist List Container
 export const PlaylistListContainer = chakra(VStack, {
   baseStyle: {
     width: '100%',
@@ -10,7 +9,6 @@ export const PlaylistListContainer = chakra(VStack, {
   },
 });
 
-// Playlist Item (Animated)
 export const PlaylistItem = chakra(motion(Box), {
   baseStyle: {
     display: 'flex',
@@ -28,14 +26,12 @@ export const PlaylistItem = chakra(motion(Box), {
   },
 });
 
-// Playlist Image
 export const PlaylistImage = chakra(Image, {
   baseStyle: {
     borderRadius: 'md',
   },
 });
 
-// Playlist Name
 export const PlaylistName = chakra(Text, {
   baseStyle: {
     fontSize: 'md',
@@ -46,7 +42,6 @@ export const PlaylistName = chakra(Text, {
   },
 });
 
-// Panel Container (Right-Side Panel)
 export const PanelContainer = chakra(Box, {
   baseStyle: {
     width: '100%',
@@ -59,7 +54,6 @@ export const PanelContainer = chakra(Box, {
   },
 });
 
-// Panel Header
 export const PanelHeader = chakra(Box, {
   baseStyle: {
     display: 'flex',
@@ -69,7 +63,6 @@ export const PanelHeader = chakra(Box, {
   },
 });
 
-// Panel Title
 export const PanelTitle = chakra(Text, {
   baseStyle: {
     fontSize: 'xl',
@@ -78,7 +71,6 @@ export const PanelTitle = chakra(Text, {
   },
 });
 
-// Close Button
 export const CloseButton = chakra(IconButton, {
   baseStyle: {
     bg: 'transparent',
@@ -89,7 +81,6 @@ export const CloseButton = chakra(IconButton, {
   },
 });
 
-// Track List Container
 export const TrackList = chakra(Box, {
   baseStyle: {
     display: 'flex',
@@ -98,7 +89,6 @@ export const TrackList = chakra(Box, {
   },
 });
 
-// Individual Track Item
 export const TrackItem = chakra(Text, {
   baseStyle: {
     padding: '8px',

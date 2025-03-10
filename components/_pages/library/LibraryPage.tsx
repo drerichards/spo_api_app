@@ -26,8 +26,10 @@ const LibraryPage = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <LibraryContainer id='library-page'>
-      <PlaylistListContainer animate={{ flex: selectedPlaylistId ? 0.73 : 1.2 }}>
+    <LibraryContainer id="library-page">
+      <PlaylistListContainer
+        animate={{ flex: selectedPlaylistId ? 0.73 : 1.2 }}
+      >
         <ScrollableContainer>
           <ScrollableSection>
             <Text

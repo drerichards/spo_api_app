@@ -17,7 +17,6 @@ const LoginPage = () => {
   const [error, setError] = useState<NullableString>(null);
 
   useEffect(() => {
-    // Check for error from redirect (though we're not setting it now, future-proofing)
     if (router.query.error) {
       setError('Authentication failed. Please try again.');
     }

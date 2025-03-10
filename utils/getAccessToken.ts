@@ -1,3 +1,4 @@
+// utils/getAccessToken.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import { parse } from 'cookie';
 import { NullableString } from '@/types';

@@ -67,3 +67,11 @@ export const ToolkitSpinnerContainer = chakra('div', {
     height: '100%',
   },
 });
+
+
+export const ToolkitSpinnerPageContainer = chakra('div', {
+  baseStyle: {
+    width: '100vw',
+    height: '100vh',
+  }
+});

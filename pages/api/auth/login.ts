@@ -1,21 +1,12 @@
 // pages/api/auth/login.ts
-import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 import crypto from 'crypto';
+import { createCookie } from '@/utils/createCookie';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const state = crypto.randomBytes(16).toString('hex');
 
-  res.setHeader(
-    'Set-Cookie',
-    serialize('spotify_auth_state', state, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 300,
-    })
-  );
+  res.setHeader('Set-Cookie', createCookie('spotify_auth_state', state, 300));
 
   const scopes = [
     'user-read-private',

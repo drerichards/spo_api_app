@@ -12,14 +12,14 @@ const config: ThemeConfig = {
 };
 
 const themeOverrides = {
-  ...baseTheme, // Ensure Chakra UI's default theme is included
+  ...baseTheme,
   config,
   fonts: {
     heading: mulish.style.fontFamily,
     body: mulish.style.fontFamily,
   },
   colors: {
-    ...baseTheme.colors, // Include default Chakra colors
+    ...baseTheme.colors,
     brand: {
       100: '#1D3557',
       200: '#457B9D',

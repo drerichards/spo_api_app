@@ -1,16 +1,10 @@
 // pages/api/auth/get-token.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { parse } from 'cookie';
+import { getAccessToken } from '@/utils/getAccessToken';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const cookies = parse(req.headers.cookie || '');
-  const accessToken = cookies.spotify_access_token;
-
-  console.log('Token request cookies:', cookies);
-
-  if (!accessToken) {
-    return res.status(401).json({ error: 'Access token missing' });
-  }
+  const accessToken = getAccessToken(req, res);
+  if (!accessToken) return;
 
   res.status(200).json({ accessToken });
 }

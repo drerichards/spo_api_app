@@ -1,6 +1,5 @@
 import { chakra, Box, VStack, Button, Text } from '@chakra-ui/react';
 
-// Full Page Container
 export const PageContainer = chakra(Box, {
   baseStyle: {
     display: 'flex',
@@ -11,7 +10,6 @@ export const PageContainer = chakra(Box, {
   },
 });
 
-// Content Wrapper
 export const ContentContainer = chakra(VStack, {
   baseStyle: {
     bg: 'background.panel',
@@ -24,7 +22,6 @@ export const ContentContainer = chakra(VStack, {
   },
 });
 
-// Headings
 export const Heading = chakra(Text, {
   baseStyle: {
     fontSize: '24px',
@@ -41,7 +38,6 @@ export const Subheading = chakra(Text, {
   },
 });
 
-// Permissions Box
 export const PermissionsBox = chakra(Box, {
   baseStyle: {
     bg: 'brand.100',
@@ -62,7 +58,6 @@ export const PermissionsBox = chakra(Box, {
   },
 });
 
-// Login Button
 export const LoginButton = chakra(Button, {
   baseStyle: {
     bg: 'brand.500',

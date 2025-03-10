@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { getAccessToken } from '@/utils/getAccessToken';
+import spotifyAxios from '@/utils/spotifyAxios';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,8 +19,8 @@ export default async function handler(
   }
 
   try {
-    const response = await axios.get(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+    const response = await spotifyAxios.get(
+      `/playlists/${playlistId}/tracks`,
       {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
