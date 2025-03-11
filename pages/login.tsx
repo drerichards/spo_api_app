@@ -1,3 +1,4 @@
+// pages/login.tsx
 import LoginPage from '@/components/_pages/login/LoginPage';
 
 export default function Login() {

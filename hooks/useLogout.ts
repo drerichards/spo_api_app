@@ -1,3 +1,4 @@
+// hooks/useLogout.ts
 import { useRouter } from 'next/router';
 import axios, { AxiosError } from 'axios';
 import useAppStore from '@/store/appState';

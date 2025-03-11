@@ -1,4 +1,4 @@
-// pages/api/auth/get-csrf-token.ts
+// utils/getCSRFToken.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import { parse } from 'cookie';
 

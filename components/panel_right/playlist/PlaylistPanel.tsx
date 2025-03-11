@@ -1,3 +1,4 @@
+// components/panel_right/playlist/PlaylistPanel.tsx
 import { useFetchUserPlaylistTracks } from '@/hooks/useFetchUserPlaylistTracks';
 import { Divider, CloseButton } from '@chakra-ui/react'
 import {

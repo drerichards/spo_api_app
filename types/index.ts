@@ -1,3 +1,4 @@
+// types/index.ts
 export type OptionalString = string | undefined;
 export type NullableString = string | null;
 

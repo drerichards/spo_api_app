@@ -1,3 +1,4 @@
+// store/appState.ts
 export interface AppState {
   userData: SpotifyUser | null;
   setUserData: (data: SpotifyUser | null) => void;

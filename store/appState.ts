@@ -1,3 +1,4 @@
+// store/appState.ts
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AppState, SpotifyPlaylist, SpotifyTrack, SpotifyUser } from '@/types/store';

@@ -1,3 +1,4 @@
+// components/panel_right/playlist/PlaylistList.tsx
 import { SpotifyPlaylist, SpotifyPlaylistData } from '@/types/store';
 import {
   PlaylistListContainer,
